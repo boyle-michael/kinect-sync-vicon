@@ -6,15 +6,13 @@ import threading
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-n', '--name', type=str, default='test', help='output file name (automatically appends the camera and trial number)')
-parser.add_argument('-x', type=int, default=10, help='x coordinate for mouse click')
-parser.add_argument('-y', type=int, default=1070, help='y coordinate for mouse click')
-parser.add_argument('--five', type=str, default='5', help='hotkey for 5 second run')
-parser.add_argument('--ten', type=str, default='6', help='hotkey for 10 second run')
-parser.add_argument('-trial', '--trial', type=int, default=1 , help='trial number to start from')
+parser.add_argument('-n', '--name', type=str, default='test', help='output file name (automatically appends the camera and trial number) DEFAULT: test')
+parser.add_argument('--five', type=str, default='5', help='hotkey for 5 second run DEFAULT: \'5\'')
+parser.add_argument('--ten', type=str, default='6', help='hotkey for 10 second run DEFAULT: \'6\'')
+parser.add_argument('-trial', '--trial', type=int, default=1 , help='trial number to start from DEFAULT: 1')
 args = parser.parse_args()
 
-block = [False]
+values = {'x': 0, 'y': 0, 'block': False}
 
 # starts the recording command for sub kinect for given time
 def start_sub(time):
@@ -37,14 +35,14 @@ def record_5():
     t1.start()
     # starting thread 2
     t2.start()
-    pag.click(args.x, args.y)
+    pag.click(values['x'], values['y'])
     # wait until thread 1 is completely executed
     t1.join()
     # wait until thread 2 is completely executed
     t2.join()
     args.trial += 1
     print('\n5 second recording completed\n')
-    block[0] = False
+    values['block'] = False
     print_help()
 
 def record_10():
@@ -56,28 +54,29 @@ def record_10():
     t1.start()
     # starting thread 2
     t2.start()
-    pag.click(args.x, args.y)
+    pag.click(values['x'], values['y'])
     # wait until thread 1 is completely executed
     t1.join()
     # wait until thread 2 is completely executed
     t2.join()
     args.trial += 1
     print('\n10 second recording completed\n')
-    block[0] = False
+    values['block'] = False
     print_help()
 
 def print_help():
     print(f'Press \'{args.five}\' to start a 5 second trial')
     print(f'Press \'{args.ten}\' to start a 10 second trial')
     print('Press Esc to quit this program')
+    print()
 
 def on_press(key):
     try: 
-        if key.char == args.five and not block[0]:
-            block[0] = True
+        if key.char == args.five and not values['block']:
+            values['block'] = True
             record_5()
-        elif key.char == args.ten and not block[0]:
-            block[0] = True
+        elif key.char == args.ten and not values['block']:
+            values['block'] = True
             record_10()
     except AttributeError:
         pass
@@ -87,6 +86,18 @@ def on_release(key):
     if key == keyboard.Key.esc:
         # Stop listener
         return False
+
+print('Move mouse to start button and press Crtl + c to save the values')
+try:
+    while True:
+        x, y = pag.position()
+        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
+        print(positionStr, end='')
+        print('\b' * len(positionStr), end='', flush=True)
+        values['x'] = x
+        values['y'] = y
+except KeyboardInterrupt:
+    print('\n')
 
 print_help()
 with keyboard.Listener(
