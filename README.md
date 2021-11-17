@@ -18,13 +18,14 @@ Check if you have pip installed, open Command Prompt and paste the following:
 
 ```pip --version```
 
+If you see the version number, move on to Download Git.
+
 #### :warning: If you don't have pip, please follow these steps:
 Go to this link: https://bootstrap.pypa.io/get-pip.py. Right click and save as to download the file.
 Then run the following to install pip:
 
 ```python get-pip.py```
 
-If you see the version number, move on to Download Git.
 
 ### Download Git
 Check if you have Git installed, open Command Prompt and paste the following:
