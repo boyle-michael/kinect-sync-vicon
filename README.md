@@ -69,8 +69,8 @@ Now run the program with your desired arguments:
 
 The first thing it will ask is for you to mouse the mouse to the location of the start button. In the VICON software, this will be on a panel on the righthand side of the screen. Once the mouse is over the start button, press Crtl + c to save that mouse location. 
 
-![Mouse Location](./Images/mouse_location.JPG "mouseLocation")
+![Mouse Location](./Images/mouse_location.jpg "mouseLocation")
 
 Finally, follow the directions to start trials. You can change the hotkeys that start the trials by specifying them in the program arguments. For example, the following will change the 5 second trial to start with '-' and the 10 second trial to start with '='.
 
-![Hot Keys](./Images/hotkeys.JPG "hotkeys")
+![Hot Keys](./Images/hotkeys.jpg "hotkeys")
