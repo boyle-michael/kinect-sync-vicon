@@ -45,7 +45,7 @@ def record_10():
     t1.start()
     # starting thread 2
     t2.start()
-    pag.click(5, 1075)
+    pag.click(20, 1060)
     # wait until thread 1 is completely executed
     t1.join()
     # wait until thread 2 is completely executed
